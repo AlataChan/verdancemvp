@@ -1,0 +1,72 @@
+---
+description: 
+globs: *.tsx,*.ts,*.json,*.py
+alwaysApply: false
+---
+# 蔚澜智越编码规范
+
+## 命名规范
+- 后端API路径必须遵循RESTful规范，使用复数名词表示资源
+- 数据库表命名必须使用下划线命名法，如"knowledge_base"
+- TypeScript/JavaScript变量必须采用驼峰式命名(camelCase)
+- Python代码变量和函数必须使用蛇形命名法(snake_case)
+- 接口和类型定义必须使用大写驼峰式(PascalCase)
+- 核心模块必须遵循"蔚澜+功能"命名格式
+- 子模块必须遵循"XX+功能"命名模式
+- 前端组件文件使用PascalCase (例如：UserProfile.tsx)
+- 前端非组件文件使用camelCase (例如：apiUtils.ts)
+- 后端Python模块使用snake_case (例如：user_service.py)
+
+## 代码注释
+- 所有公共API和函数必须使用JSDoc格式注释
+- 复杂算法必须添加详细说明
+- 代码中的TODO项必须包含对应的任务ID或创建日期
+- 关键业务逻辑必须含有解释性注释
+- 提示词模板必须有详细注释说明用途和参数
+- 注释应解释"为什么"而不仅是"是什么"
+- 标记TODO和FIXME便于后续改进
+
+## 代码结构
+- 前端代码必须按功能模块组织，遵循Next.js约定
+- 后端代码必须采用分层架构，控制器、服务、模型分离
+- 智能体代码必须分为提示词、工具、编排三部分
+- 工具函数必须放在utils目录下，按功能分类
+- 配置文件必须集中在config目录下
+- 按照五层架构组织代码：蔚澜策、蔚澜行、蔚澜源、蔚澜境、蔚澜鉴
+
+## 前端规范
+- 使用React函数组件和Hooks，避免类组件
+- 遵循单一职责原则拆分组件
+- 使用TypeScript为所有代码添加类型注解，避免使用any
+- 样式优先使用Tailwind CSS，复杂组件用模块化CSS
+- 表单处理使用React Hook Form或Formik
+- 状态管理：本地状态用useState/useReducer，全局状态用Zustand
+- 使用React.memo避免不必要的重渲染
+- 使用useCallback和useMemo缓存函数和计算结果
+- 服务端状态管理使用React Query
+
+## 后端规范
+- 遵循PEP 8规范，行长度限制为88个字符
+- 使用FastAPI路由器组织API端点
+- 使用Pydantic模型定义请求和响应结构
+- 分离业务逻辑和数据访问层
+- 使用依赖注入管理服务和仓储
+- 实现全面的错误处理和日志记录
+- 使用SQLAlchemy ORM管理数据库操作
+- 使用参数化查询防止SQL注入
+- 使用Alembic管理数据库迁移
+
+## 测试规范
+- 前端：Jest + React Testing Library
+- 后端：pytest
+- 集成测试：TestClient (FastAPI) + pytest-asyncio
+- E2E测试：Cypress
+- 关键函数必须包含单元测试
+
+## 最佳实践
+- 避免代码重复，抽取共用逻辑为工具函数
+- 避免深层嵌套，使用提前返回模式
+- 使用async/await替代Promise链
+- 实现错误边界和异常处理机制
+- 数据验证必须在API入口处执行
+- Git提交信息遵循Conventional Commits规范

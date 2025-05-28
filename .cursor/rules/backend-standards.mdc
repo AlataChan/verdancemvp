@@ -1,0 +1,167 @@
+---
+description: 后端编码规范
+globs: 
+alwaysApply: false
+---
+# 蔚澜智越后端编码规范
+
+## Python代码风格
+- 遵循PEP 8规范
+- 使用Black格式化工具
+- 行长度限制为88个字符
+- 使用isort管理导入顺序
+- 使用flake8进行代码检查
+
+## 命名规范
+- 变量和函数：`snake_case`
+- 类：`PascalCase`
+- 常量：`UPPER_CASE`
+- 私有成员以单下划线开头：`_private_var`
+- 模块名使用小写单词，不使用下划线
+
+```python
+# ✅ 推荐
+class UserService:
+    DEFAULT_ROLE = "user"
+    
+    def __init__(self, repository):
+        self._repository = repository
+    
+    def get_user_by_email(self, email):
+        return self._repository.find_by_email(email)
+
+# ❌ 避免
+class userService:
+    defaultRole = "user"
+    
+    def __init__(self, repository):
+        self.repository = repository
+    
+    def getUserByEmail(self, email):
+        return self.repository.findByEmail(email)
+```
+
+## FastAPI最佳实践
+- 使用路由器分组相关端点
+- 使用依赖注入管理服务和仓储
+- 使用Pydantic模型定义请求和响应结构
+- 实现适当的错误处理和状态码
+- API路径遵循RESTful设计原则
+
+```python
+# 依赖注入示例
+from fastapi import Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.db.session import get_async_session
+from app.repositories.user_repository import UserRepository
+from app.services.user_service import UserService
+
+
+async def get_user_repository(
+    session: AsyncSession = Depends(get_async_session)
+) -> UserRepository:
+    return UserRepository(session)
+
+
+async def get_user_service(
+    repository: UserRepository = Depends(get_user_repository)
+) -> UserService:
+    return UserService(repository)
+
+
+# 路由示例
+@router.get("/{user_id}", response_model=UserResponse)
+async def get_user(
+    user_id: str, 
+    user_service: UserService = Depends(get_user_service)
+):
+    """获取单个用户详情"""
+    user = await user_service.get_user(user_id)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="用户不存在"
+        )
+    return user
+```
+
+## 项目结构
+- 按照五层架构组织代码
+- 分离接口、服务和数据访问层
+- 实现关注点分离
+- 将配置与代码分离
+
+## 数据库操作
+- 使用SQLAlchemy ORM
+- 使用参数化查询防止SQL注入
+- 使用Alembic管理数据库迁移
+- 实现事务管理确保数据一致性
+- 优化查询避免N+1问题
+
+```python
+# 使用参数化查询
+async def find_users_by_role(self, role: str, limit: int):
+    query = select(User).where(User.role == role).limit(limit)
+    result = await self.session.execute(query)
+    return result.scalars().all()
+```
+
+## 异步编程
+- 使用`async/await`进行异步操作
+- 正确处理异步上下文管理器
+- 避免阻塞主事件循环
+- 适当使用同步和异步函数
+
+## 错误处理
+- 定义自定义异常层次结构
+- 在API层统一处理异常
+- 提供清晰的错误消息
+- 记录详细日志便于调试
+- 不在错误响应中暴露敏感信息
+
+## 安全最佳实践
+- 实现适当的身份验证和授权
+- 存储密码使用哈希和盐值
+- 防止CSRF、XSS和SQL注入
+- 限制API请求频率
+- 验证所有用户输入
+
+## 测试规范
+- 编写单元测试和集成测试
+- 使用pytest作为测试框架
+- 模拟外部依赖和服务
+- 使用fixture创建测试数据
+- 实现测试覆盖率报告
+
+```python
+@pytest.fixture
+def mock_user_repository():
+    repository = MagicMock()
+    repository.find_by_id.return_value = {
+        "id": "user-123",
+        "name": "测试用户",
+        "email": "test@example.com",
+        "role": "user"
+    }
+    return repository
+
+
+def test_get_user_by_id(mock_user_repository):
+    # 安排
+    service = UserService(repository=mock_user_repository)
+    
+    # 执行
+    user = service.get_user_by_id("user-123")
+    
+    # 断言
+    assert user["id"] == "user-123"
+    assert user["name"] == "测试用户"
+    mock_user_repository.find_by_id.assert_called_once_with("user-123")
+```
+
+## 文档规范
+- 使用Google风格的Docstring
+- 为所有公共API添加文档
+- 包含参数、返回值和异常信息
+- 提供使用示例

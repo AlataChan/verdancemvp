@@ -1,0 +1,23 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+## 基本原则
+- 所有响应必须使用中文
+- 代码注释使用JSDoc格式
+- 始终遵循五层架构体系（蔚澜策、蔚澜行、蔚澜源、蔚澜境、蔚澜鉴）
+- 系统图表使用mermaid格式展示
+- 所有新创建的文档和目录，都需要明确指明其文件路径
+
+## 命名规范
+- 核心模块必须遵循"verdance+function"命名格式
+- 子模块必须遵循"XX+function"命名模式
+- TypeScript/JavaScript变量采用驼峰式命名(camelCase)
+- Python代码变量和函数使用蛇形命名法(snake_case)
+- 接口和类型定义使用大写驼峰式(PascalCase)
+
+## 文档更新
+- 实现重大变更后必须更新记忆库memory_bank
+- 发现新的项目模式时记录到.cursorrules
+- 清晰记录当前状态和下一步计划

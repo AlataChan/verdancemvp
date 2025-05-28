@@ -1,0 +1,48 @@
+{
+    "version": "0.2",
+    "language": "en,zh-CN",
+    "words": [
+        "datetime",
+        "fastapi",
+        "isoformat",
+        "pydantic",
+        "sqlalchemy",
+        "sqlmodel",
+        "timedelta",
+        "utcnow",
+        "verdance",
+        "verdance_mvp",
+        "SQLModel",
+        "SQLAlchemy",
+        "timestamptz",
+        "uvicorn",
+        "dotenv",
+        "leaderboard",
+        "conftest",
+        "testpaths",
+        "pytest",
+        "testclient",
+        "jsonable",
+        "orjson",
+        "CORS",
+        "httpx",
+        "alembic",
+        "testuser",
+        "asyncio",
+        "passlib",
+        "websockets",
+        "openai"
+    ],
+    "ignorePaths": [
+        "node_modules/**",
+        "venv/**",
+        "env/**",
+        ".git/**",
+        "**/*.min.js",
+        "**/*.css"
+    ],
+    "ignoreRegExpList": [
+        "chinese",
+        "/[\\u4e00-\\u9fa5]/g"
+    ]
+} 

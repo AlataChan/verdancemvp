@@ -1,0 +1,52 @@
+---
+description: 
+globs: *.ts,*.tsx,*.js,*.jsx,*.py,*.css,*.scss,*.json,*.yaml,*.yml,*.md,Dockerfile
+alwaysApply: false
+---
+# 蔚澜智越技术栈
+
+## 前端技术
+
+- **框架**：Next.js 14.0+
+- **样式**：TailwindCSS
+- **状态管理**：Zustand
+- **UI组件**：shadcn/ui
+- **图表可视化**：Mermaid.js
+- **类型系统**：TypeScript 5.0+
+
+## 后端技术
+
+- **API框架**：FastAPI
+- **关系数据库**：PostgreSQL 16
+- **图数据库**：Neo4j
+- **向量数据库**：Weaviate/Qdrant
+- **缓存系统**：Redis
+- **消息队列**：RabbitMQ
+
+## AI与智能体
+
+- **LLM引擎**：OpenAI API (GPT-4), Claude 3
+- **智能体编排**：LangGraph, Autogen, CrewAI
+- **向量检索**：FAISS, Milvus
+- **嵌入模型**：OpenAI Ada, BGE Embedding
+- **知识抽取**：LangChain
+
+## 部署与运维
+
+- **容器化**：Docker
+- **编排**：Kubernetes
+- **CI/CD**：GitHub Actions
+- **监控**：Prometheus + Grafana
+- **日志**：ELK Stack
+
+## 代码规范
+
+- **命名约定**：
+  - TypeScript/JavaScript：驼峰式命名(camelCase)
+  - Python：蛇形命名法(snake_case)
+  - 接口和类型：大写驼峰式(PascalCase)
+  - 数据库表：下划线命名法(snake_case)
+
+- **代码注释**：使用JSDoc格式
+- **API文档**：遵循OpenAPI 3.0规范
+- **版本控制**：遵循语义化版本(SemVer)规范

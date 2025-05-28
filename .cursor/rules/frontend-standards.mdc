@@ -1,0 +1,93 @@
+---
+description: 前端编码规范
+globs: 
+alwaysApply: false
+---
+# 蔚澜智越前端编码规范
+
+## React组件规范
+- 使用函数组件和Hooks，避免类组件
+- 每个组件文件应该只包含一个主要组件
+- 组件应遵循单一职责原则，复杂组件拆分为小组件
+- 使用PropTypes或TypeScript类型定义组件属性
+- 组件文件命名使用PascalCase (例如：UserProfile.tsx)
+
+## TypeScript规范
+- 为所有代码添加类型注解，避免使用any
+- 使用接口（interface）定义对象结构
+- 导出类型和接口使用PascalCase
+- 在不能确定类型时，使用unknown而非any
+- 使用类型守卫（Type Guards）进行类型缩小
+
+```typescript
+// ✅ 推荐
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'user' | 'guest';
+}
+
+// 使用类型守卫
+function isAdmin(user: User): user is User & { role: 'admin' } {
+  return user.role === 'admin';
+}
+
+// ❌ 避免
+function getUser(id): any {
+  // 实现
+}
+```
+
+## 状态管理
+- 本地组件状态使用useState或useReducer
+- 跨组件状态使用Zustand或Context API
+- 避免过度使用全局状态
+- 服务端状态管理使用React Query
+- 清晰区分UI状态和应用状态
+
+## 样式规范
+- 优先使用Tailwind CSS实现原子化样式
+- 遵循移动优先（mobile-first）响应式设计原则
+- 复杂组件可使用CSS模块（*.module.css）
+- 避免行内样式，除非是动态计算的值
+- 使用CSS变量管理主题和颜色
+
+```tsx
+// ✅ 推荐：使用Tailwind
+<div className="flex items-center p-4 rounded-lg shadow-md dark:bg-gray-800">
+  <img className="w-10 h-10 rounded-full" src={avatar} alt={name} />
+  <h3 className="ml-3 text-lg font-medium text-gray-900 dark:text-white">{name}</h3>
+</div>
+
+// ❌ 避免：行内样式
+<div style={{ display: 'flex', padding: '16px', borderRadius: '8px' }}>
+  {/* 内容 */}
+</div>
+```
+
+## 表单处理
+- 使用React Hook Form管理表单状态
+- 实现表单验证和错误处理
+- 禁用按钮防止重复提交
+- 提供表单加载和成功状态的反馈
+
+## 性能优化
+- 使用React.memo避免不必要的重渲染
+- 使用useCallback和useMemo缓存函数和计算结果
+- 实现组件懒加载（React.lazy和Suspense）
+- 使用windowing技术渲染长列表（react-window）
+- 优化依赖数组避免无限循环
+
+## 文件结构
+- 相关组件放在同一目录下
+- 共享组件放在`components/common`目录
+- 业务组件按模块组织
+- 公共hooks放在`hooks`目录
+- 工具函数放在`utils`目录
+
+## 代码注释
+- 使用JSDoc格式为组件和函数添加文档
+- 注释应解释"为什么"而不仅是"是什么"
+- 复杂逻辑必须有注释说明
+- 标记TODO和FIXME便于后续改进

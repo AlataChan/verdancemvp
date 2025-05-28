@@ -1,0 +1,83 @@
+### 环境变量设置
+@baseUrl = http://localhost:8001
+@email = test@example.com
+@password = password123
+
+### 注册
+POST {{baseUrl}}/api/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+### 登录
+# 注意：登录API使用表单数据而不是JSON
+POST {{baseUrl}}/api/login
+Content-Type: application/x-www-form-urlencoded
+
+username={{email}}&password={{password}}
+
+### 保存登录后的token
+@token = {{login.response.body.access_token}}
+
+### 获取当前用户信息
+GET {{baseUrl}}/api/user/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### 获取ESG任务列表（无需认证）
+GET {{baseUrl}}/api/tasks
+Content-Type: application/json
+
+### 获取指定日期ESG任务列表
+GET {{baseUrl}}/api/tasks?date=2023-06-01
+Content-Type: application/json
+
+### 按分类获取ESG任务列表
+GET {{baseUrl}}/api/tasks?category=environment
+Content-Type: application/json
+
+### 提交打卡（需要认证）
+POST {{baseUrl}}/api/actions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "task_id": "1"
+}
+
+### 获取用户积分和行为统计（需要认证）
+GET {{baseUrl}}/api/actions/stats
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### 查看用户仪表盘（需要认证）
+GET {{baseUrl}}/api/dashboard/user
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### 查看用户行为历史（需要认证）
+GET {{baseUrl}}/api/actions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### 获取排行榜
+GET {{baseUrl}}/api/leaderboard
+Content-Type: application/json
+
+### 获取系统概览（公开API）
+GET {{baseUrl}}/api/dashboard/overview
+Content-Type: application/json
+
+### 启动服务器命令
+# uvicorn app.main:app --reload
+
+### 环境变量设置（仅开发环境）
+# export DATABASE_URL="sqlite:///./verdance.db"
+# 
+# 对于生产环境，您可以设置：
+# export DATABASE_URL="postgresql://user:password@localhost:5432/verdance"
+# export SECRET_KEY="your_custom_secure_secret_key"
